@@ -7,7 +7,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 WORLDSIZE = 600
 class Ship:
-    def __init__(self, x, y, window):
+    def __init__(self, x, y, window, p = 0):
         w = 10
         h = 30
         self.x1 = x
@@ -16,7 +16,7 @@ class Ship:
         self.y2 = y + h
 
         self.vel = 5
-        self.point = 0
+        self.point = p
         self.icon = pygame.draw.rect(window, WHITE, (x, y, w, h))
 
     def moveUp(self):
@@ -69,11 +69,18 @@ def main():
     win = pygame.display.set_mode((WORLDSIZE, WORLDSIZE))
     pygame.display.set_caption("Astro Race")
 
+    scorefont = pygame.font.SysFont("ocraextended", 50)
+
     playing = True
     AsteroidList = []
-                  
+    
+    
+           
     P1 = Ship(200, 560, win)
     P2 = Ship(390, 560, win)
+    P1Score = scorefont.render(str(P1.point), 1, WHITE)
+    P2Score = scorefont.render(str(P2.point), 1, WHITE)
+    
     win.fill(BLACK)
     for i in range(0,23):
         y = randint(0, 500)
@@ -84,7 +91,8 @@ def main():
         AsteroidList.append(newAst)
         AsteroidList[i].draw(win)
     
-  
+    win.blit(P1Score, (150, 550))
+    win.blit(P2Score, (425, 550))
     P1.draw(win)
     P2.draw(win)
     pygame.display.update()
@@ -135,18 +143,24 @@ def main():
                 P2.draw(win)
                 
         if P1.y1 <= 0:
-            P1.point += 1
-            P1 = Ship(200, 560, win)
+            p = P1.point + 1
+            P1 = Ship(200, 560, win, p)
             P1.draw(win)
+            P1Score = scorefont.render(str(P1.point), 1, WHITE)
             
         if P2.y1 <= 0:
-            P2.point += 1
-            P2 = Ship(390, 560, win)
+            p = P2.point + 1
+            P2 = Ship(390, 560, win, p)
             P2.draw(win)
+            P2Score = scorefont.render(str(P2.point), 1, WHITE)
             
+        win.blit(P1Score, (150, 550))
+        win.blit(P2Score, (425, 550))
+        
         clock.tick(FPS)
         pygame.display.update()
     pygame.quit()
     
 if __name__ == "__main__":
     main()
+
