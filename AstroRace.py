@@ -136,21 +136,21 @@ def main():
 
         for a in AsteroidList:
             if a.x1 >= P1.x1 and a.x1 <= P1.x2 and a.y1 >= P1.y1 and a.y1 <= P1.y2:
-                P1 = Ship(200, 560, win)
+                P1 = Ship(200, 560, win, point1)
                 P1.draw(win)
             elif a.x1 >= P2.x1 and a.x1 <= P2.x2 and a.y1 >= P2.y1 and a.y1 <= P2.y2:
-                P2 = Ship(390, 560, win)
+                P2 = Ship(390, 560, win, point2)
                 P2.draw(win)
                 
         if P1.y1 <= 0:
-            p = P1.point + 1
-            P1 = Ship(200, 560, win, p)
+            point1 = P1.point + 1
+            P1 = Ship(200, 560, win, point1)
             P1.draw(win)
             P1Score = scorefont.render(str(P1.point), 1, WHITE)
             
         if P2.y1 <= 0:
-            p = P2.point + 1
-            P2 = Ship(390, 560, win, p)
+            point2 = P2.point + 1
+            P2 = Ship(390, 560, win, point2)
             P2.draw(win)
             P2Score = scorefont.render(str(P2.point), 1, WHITE)
             
