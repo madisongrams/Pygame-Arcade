@@ -53,7 +53,23 @@ class Asteroid:
     def draw(self, window):
         pygame.draw.rect(window, WHITE, self.icon)
    
-        
+class TimeBar:
+
+    def __init__(self, window):
+        self.y = 0
+        self.count = 0
+        self.icon = pygame.draw.line(window, WHITE, (300, self.y), (300, 600), 10)
+
+    def update(self, window):
+        self.count += 1
+        if self.count == 29:
+            self.y += 5
+            self.icon = pygame.draw.line(window, WHITE, (300, self.y), (300, 600), 10)
+            self.count = 0
+        else:
+            pygame.draw.line(window, WHITE, (300, self.y), (300, 600), 10)
+    def isDone(self):
+        return self.y == 600
 def main():
     pygame.init()
     clock = pygame.time.Clock()
@@ -74,12 +90,14 @@ def main():
     playing = True
     AsteroidList = []
     
-    
+    point1 = 0
+    point2 = 0
            
     P1 = Ship(200, 560, win)
     P2 = Ship(390, 560, win)
     P1Score = scorefont.render(str(P1.point), 1, WHITE)
     P2Score = scorefont.render(str(P2.point), 1, WHITE)
+    bar = TimeBar(win)
     
     win.fill(BLACK)
     for i in range(0,23):
@@ -95,6 +113,7 @@ def main():
     win.blit(P2Score, (425, 550))
     P1.draw(win)
     P2.draw(win)
+    bar.update(win)
     pygame.display.update()
     pygame.time.wait(1000)
     while playing:
@@ -125,6 +144,12 @@ def main():
         
         P1.draw(win)
         P2.draw(win)
+        bar.update(win)
+        
+        if bar.isDone():
+            pygame.time.wait(1000)
+            playing = False
+            
         for i in range(0,len(AsteroidList) - 1):
             if AsteroidList[i].x2 <= 0 and AsteroidList[i].vel < 0:
                 y = randint(0, 500)
