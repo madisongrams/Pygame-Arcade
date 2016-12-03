@@ -221,7 +221,7 @@ def main():
                 i.draw(win)
             P1.draw(win)
             P2.draw(win)
-            win.blit(won, (200, 300))
+            win.blit(won, (260, 300))
             pygame.display.update()
 
             #Wait a few seconds before exiting game
