@@ -21,7 +21,8 @@ def main():
     #setting up window
     size = [WORLDSIZE, WORLDSIZE]
     screen = pygame.display.set_mode(size)
-
+    pygame.display.set_caption("Pygame Arcade")
+    
     #initializing fonts
     titleFont = pygame.font.SysFont("monospace", 35)
     myFont = pygame.font.SysFont("monospace", 20)
