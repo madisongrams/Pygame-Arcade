@@ -112,11 +112,14 @@ def main():
     instr21 = instrFont.render("at the end of 2 minutes wins!", 1, WHITE)
     instr3 = instrFont.render("P1 Up: W, Down: S", 1, WHITE)
     instr4 = instrFont.render("P2 Up: Up Arrow, Down: Down Arrow", 1, WHITE)
-    instr5 = instrFont.render("Press any key to begin!", 1, WHITE)
+    
+    instr5 = instrFont.render("Press 1 for one player,", 1, WHITE)
+    instr6 = instrFont.render("and 2 for two players!", 1, WHITE)
 
     #Game opens up to menu before gameplay begins
     menu = True
     playing = False
+    Two = False
     while menu:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -124,8 +127,13 @@ def main():
                 
             elif event.type == pygame.KEYDOWN:
                 #When any key is pressed, gameplay begins
-                menu = False
-                playing = True
+                if event.key == pygame.K_1:
+                    menu = False
+                    playing = True
+                elif event.key == pygame.K_2:
+                    menu = False
+                    playing = True
+                    Two = True
                     
         
         #updating screen
@@ -136,9 +144,10 @@ def main():
         win.blit(instr2, (60, 290))
         win.blit(instr21, (100, 330))
         win.blit(instr3, (200, 370))
-        win.blit(instr4, (140, 400))
-        win.blit(instr5, (138, 450))
-        
+        win.blit(instr4, (120, 400))
+        win.blit(instr5, (128, 450))
+        win.blit(instr6, (128, 500))
+    
         pygame.display.update()
         clock.tick(FPS)
 
@@ -190,12 +199,14 @@ def main():
         
         elif key[pygame.K_s]:
             P1.moveDown()
-        
-        if key[pygame.K_UP]:
+        if Two == True:
+            if key[pygame.K_UP]:
+                P2.moveUp()
+            elif key[pygame.K_DOWN]:
+                P2.moveDown()
+        else:
             P2.moveUp()
-        elif key[pygame.K_DOWN]:
-            P2.moveDown()
-
+            
         #Moving asteroids
         for i in AsteroidList:
             i.move()
